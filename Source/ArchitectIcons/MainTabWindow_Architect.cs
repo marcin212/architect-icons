@@ -75,16 +75,8 @@ namespace ArchitectIcons
                     ++num2;
                 }
 
-                if (Resources.icons.ContainsKey(desPanelsCached[index].def.defName))
-                {
-                    GUI.DrawTexture(new Rect(rect.position + new Vector2(4, (32 - 16) / 2), new Vector2(16, 16)),
-                        Resources.icons[desPanelsCached[index].def.defName]);
-                }
-                else
-                {
-                    Logger.Message("Not found icon for: " + desPanelsCached[index].def.defName);
-                    Resources.icons.Add(desPanelsCached[index].def.defName, Resources.MissingTexture);
-                }
+                GUI.DrawTexture(new Rect(rect.position + new Vector2(4, (32 - 16) / 2), new Vector2(16, 16)),
+                    Resources.FindArchitectTabCategoryIcon(desPanelsCached[index].def.defName));
             }
         }
     }
