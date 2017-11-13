@@ -47,6 +47,18 @@ namespace ArchitectIcons
                 DefDatabase<DesignationCategoryDef>.AllDefs.OrderByDescending<DesignationCategoryDef, int>(
                     (Func<DesignationCategoryDef, int>) (dc => dc.order)))
                 desPanelsCached.Add(new ArchitectCategoryTabCustomOffset(def));
+
+            List<string> listTab = new List<string>();
+            for (int index = 0; index < desPanelsCached.Count; ++index)
+            {
+                listTab.Add(desPanelsCached[index].def.defName);
+            }
+
+            try
+            {
+                System.IO.File.WriteAllLines(Resources.GetSettingsPath("CategoryTabsName.txt"), listTab.ToArray());
+            }
+            catch (Exception e) { };
         }
 
         public override void DoWindowContents(Rect inRect)
