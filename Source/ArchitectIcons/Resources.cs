@@ -62,14 +62,13 @@ namespace ArchitectIcons
                 }
                 //Search for mod support
                 if(!icon)
-                    icon = ContentFinder<Texture2D>.Get("UI/ArchitectIcons/" + categoryDefName);
+                    icon = ContentFinder<Texture2D>.Get("UI/ArchitectIcons/" + categoryDefName, false);
                 // if not supported
                 
                 if (!icon)
                 {
-                    //Chek if  ArchitectIcons adds support. If not, set missing texture.
-                    icon = ContentFinder<Texture2D>.Get("UI/ArchitectIcons/Default/" + categoryDefName) ?? MissingTexture;
-
+                    //Check if  ArchitectIcons adds support. If not, set missing texture.
+                    icon = ContentFinder<Texture2D>.Get("UI/ArchitectIcons/Default/" + categoryDefName, false) ?? MissingTexture;
                 }
                 iconsCache.Add(categoryDefName, icon);
                 return icon;
