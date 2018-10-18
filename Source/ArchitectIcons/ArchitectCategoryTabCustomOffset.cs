@@ -16,7 +16,7 @@ namespace ArchitectIcons
                 Find.DesignatorManager.SelectedDesignator.DoExtraGuiControls(0.0f,
                     (float) ((double) (UI.screenHeight - 35) -
                              (double) ((RimWorld.MainTabWindow_Architect) MainButtonDefOf.Architect.TabWindow)
-                             .WinHeight - 230.0));
+                             .WinHeight - 270.0));
             Gizmo mouseoverGizmo;
             GizmoGridDrawer.DrawGizmoGrid(this.def.ResolvedAllowedDesignators.Cast<Gizmo>(), 210f + 2 * 16,
                 out mouseoverGizmo);
