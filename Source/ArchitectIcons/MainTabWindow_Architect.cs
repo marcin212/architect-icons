@@ -76,7 +76,7 @@ namespace ArchitectIcons
                     ++rect.width;
 
                 if (Widgets.ButtonTextSubtle(rect, desPanelsCached[index].def.LabelCap, 0.0f, 24f,
-                    SoundDefOf.Mouseover_Category))
+                    SoundDefOf.Mouseover_Category, new Vector2(-1, -1)))
                     this.ClickedCategory(desPanelsCached[index]);
                 if (this.selectedDesPanel != desPanelsCached[index])
                     UIHighlighter.HighlightOpportunity(rect, desPanelsCached[index].def.cachedHighlightClosedTag);
