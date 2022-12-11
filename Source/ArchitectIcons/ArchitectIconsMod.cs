@@ -18,10 +18,12 @@ namespace ArchitectIcons
             var harm = new Harmony("com.bymarcin.architecticons");
             harm.Patch(AccessTools.PropertyGetter(typeof(MainTabWindow_Architect), nameof(MainTabWindow_Architect.RequestedTabSize)),
                 postfix: new HarmonyMethod(GetType(), nameof(AddWidth)));
-            harm.Patch(AccessTools.Method(typeof(MainTabWindow_Architect), AccessTools.Method(typeof(MainTabWindow_Architect), "DoCategoryButton").Name),
+            harm.Patch(AccessTools.Method(typeof(MainTabWindow_Architect), "DoCategoryButton"),
                 transpiler: new HarmonyMethod(GetType(), nameof(ReplaceArchitectButton)));
             harm.Patch(AccessTools.Method(typeof(ArchitectCategoryTab), nameof(ArchitectCategoryTab.DesignationTabOnGUI)),
                 transpiler: new HarmonyMethod(GetType(), nameof(OffsetGizmos)));
+            harm.Patch(AccessTools.PropertyGetter(typeof(ArchitectCategoryTab), nameof(ArchitectCategoryTab.InfoRect)),
+                transpiler: new HarmonyMethod(GetType(), nameof(WidenInfoBox)));
         }
 
         public static void AddWidth(ref Vector2 __result) => __result.x += ADD_WIDTH;
@@ -53,10 +55,17 @@ namespace ArchitectIcons
         {
             foreach (var instruction in instructions)
             {
-                if (instruction.opcode == OpCodes.Ldc_R4 && (float)instruction.operand == 210f)
-                {
-                    instruction.operand = (float) instruction.operand + ADD_WIDTH;
-                }
+                if (instruction.opcode == OpCodes.Ldc_R4 && (float)instruction.operand == 210f) instruction.operand = (float)instruction.operand + ADD_WIDTH;
+
+                yield return instruction;
+            }
+        }
+
+        public static IEnumerable<CodeInstruction> WidenInfoBox(IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (var instruction in instructions)
+            {
+                if (instruction.opcode == OpCodes.Ldc_R4 && (float)instruction.operand == 200f) instruction.operand = (float)instruction.operand + ADD_WIDTH;
 
                 yield return instruction;
             }
