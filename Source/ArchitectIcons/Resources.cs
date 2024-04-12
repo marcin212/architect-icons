@@ -11,10 +11,13 @@ namespace ArchitectIcons
     {
         public static readonly Dictionary<String, Texture2D> iconsCache = new Dictionary<string, Texture2D>();
         public static readonly Texture2D MissingTexture;
+        public static readonly string TabListFile = "tab_list.txt";
+        
         static Resources()
         {
             //MISSING
             MissingTexture = ContentFinder<Texture2D>.Get("UI/ArchitectIcons/Default/wrongsign");
+            File.WriteAllText(GetSettingsPath(TabListFile),string.Empty);
         }
 
         public static string GetSettingsPath(string fileName)
@@ -41,6 +44,14 @@ namespace ArchitectIcons
             return null;
         }
 
+        private static void LogIcon(String categoryDefName)
+        {
+            using (StreamWriter writer = new StreamWriter(GetSettingsPath(TabListFile), append: true))
+            {
+                writer.WriteLine(categoryDefName);
+            }
+        }
+
 
         public static Texture2D FindArchitectTabCategoryIcon(String categoryDefName)
         {
@@ -50,6 +61,7 @@ namespace ArchitectIcons
             }
             else
             {
+                LogIcon(categoryDefName); //save tab name to log file.
                 Texture2D icon = null;
                 //custom icon
                 try
